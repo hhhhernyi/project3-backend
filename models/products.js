@@ -7,4 +7,4 @@ const newProduct = new mongoose.SchemaType({
     category: String
 })
 
-module.exports = Products;
+module.exports = mongoose.model("Products", newProduct);
