@@ -7,6 +7,16 @@ const User = require('../models/user');
 
 const saltRounds = 12;
 
+
+// this route is to sign up a new user
+// steps taken:
+// firstly, using the user schema/model .findOne(), find if the username sent in the req.body is already present
+// if username is taken, we return a 409 status
+// if username is not taken, use the User schema/model .create() to create a new user with the deatils provided, and hash the password
+// save this new created user into a variable named user
+// extract the username and id of the user and save to a variable named payload
+// create a jwt token using this payload and the secretkey in the .env file
+// return this key to the user as a response when user is successfully created
 router.post('/sign-up', async (req, res) => {
   try {
     const userInDatabase = await User.findOne({ username: req.body.username });
@@ -30,6 +40,8 @@ router.post('/sign-up', async (req, res) => {
   }
 });
 
+
+// this route is to sign in a existing user
 router.post('/sign-in', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
