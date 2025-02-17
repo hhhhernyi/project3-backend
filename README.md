@@ -1,5 +1,10 @@
 # Project 3 backend
 
+## Project Resources
+
+Trello - https://trello.com/b/Br6BO1Xh/insurance-crm
+
+
 ## need to npm install these modules onto your own vscode:
 * mongoose
 * morgan
