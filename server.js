@@ -20,6 +20,9 @@ mongoose.connection.on('connected', () => {
 app.use(cors());
 app.use(express.json());
 app.use(logger('dev'));
+app.use('/auth', authRouter);
+
+
 
 // Routes
 app.use('/auth', authRouter);
