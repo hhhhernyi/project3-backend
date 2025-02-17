@@ -8,6 +8,7 @@ const cors = require('cors');
 const logger = require('morgan');
 
 // Import routers
+const authRouter = require('./controllers/auth');
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(logger('dev'));
 
 // Routes
+app.use('/auth', authRouter);
 
 // Start the server and listen on port 3000
 app.listen(3000, () => {
