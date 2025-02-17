@@ -7,6 +7,8 @@ const User = require('../models/user');
 
 const saltRounds = 12;
 
+// ALL URL IN THIS PAGE STARTS WITH /AUTH
+
 
 // this route is to sign up a new user
 // steps taken:
