@@ -1,6 +1,6 @@
-const mongoose = require('mongoose'); // import mongoose
+const mongoose = require('mongoose'); 
 
-// define schema
+
 const clientSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -25,4 +25,4 @@ const clientSchema = new mongoose.Schema({
 { timestamps: true }
 );
 
-module.exports = mongoose.model('Client', clientSchema); // convert the schema to model and export it
+module.exports = mongoose.model('Client', clientSchema); 
