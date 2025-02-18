@@ -1,20 +1,33 @@
 // all URL here begin with /products
+// can create products in bruno
 
 const verifyToken = require('../middleware/verify-token');
 const Product = require('../models/products')
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-
 
 // this route is to create a new product
 router.post("/", verifyToken, async (req, res) => {
     try {
-      req.body.agent = req.user._id; // req.user comes from the verify token method. we are saving the user id (user who is logged in) to be the agent (req.body.agent) that creates the cclients
-      const newProduct = await Product.create(req.body); // create the client model using .create() and save to a constant called newClient
-      //newClient._doc.agent = req.user;
+      const newProduct = await Product.create(req.body); 
       res.status(201).json(newProduct);
     } catch (err) {
       res.status(500).json({ err: err.message });
     }
   });
+
+    // INDEX: this route is to see all the products
+router.get("/", verifyToken, async (req, res) => {
+    try {
+
+      const allProducts = await Product.find({})
+        .sort({ createdAt: "desc" }); // .find() will get all clients, .populate(agent) will show the agent of the client as it is referencing the author, .sort() will sort by earliest entries first
+
+      res.status(200).send(allProducts);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  });
+
+
+  module.exports = router;

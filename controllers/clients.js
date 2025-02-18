@@ -21,13 +21,12 @@ router.post("/", verifyToken, async (req, res) => {
   });
 
   // INDEX: this route is to see all the clients
-  // need to fix this to .find only clients 
 router.get("/", verifyToken, async (req, res) => {
     try {
       const token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = decoded.payload;
-      
+
       const allClient = await Client.find({"agent": req.user})
         .populate("agent")
         .sort({ createdAt: "desc" }); // .find() will get all clients, .populate(agent) will show the agent of the client as it is referencing the author, .sort() will sort by earliest entries first
@@ -49,4 +48,6 @@ router.get("/", verifyToken, async (req, res) => {
     } catch (err) {
       res.status(500).json({ err: err.message });
     }
-  });module.exports = router;
+  });
+  
+  module.exports = router;
