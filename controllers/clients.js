@@ -5,6 +5,7 @@ const verifyToken = require('../middleware/verify-token');
 const Client = require('../models/clients')
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
 
 // this route is to create a new client
@@ -23,9 +24,14 @@ router.post("/", verifyToken, async (req, res) => {
   // need to fix this to .find only clients 
 router.get("/", verifyToken, async (req, res) => {
     try {
-      const allClient = await Client.find({})
+      const token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded.payload;
+      
+      const allClient = await Client.find({"agent": req.user})
         .populate("agent")
         .sort({ createdAt: "desc" }); // .find() will get all clients, .populate(agent) will show the agent of the client as it is referencing the author, .sort() will sort by earliest entries first
+
       res.status(200).send(allClient);
     } catch (err) {
       res.status(500).json({ err: err.message });
