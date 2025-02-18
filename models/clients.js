@@ -19,7 +19,6 @@ const clientSchema = new mongoose.Schema({
         type: String
     },
     agent: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    existingProducts: { type: mongoose.Schema.Types.ObjectId, ref: 'Products' },
     productsToSell: { type: mongoose.Schema.Types.ObjectId, ref: 'Products' },
 },
 { timestamps: true }
