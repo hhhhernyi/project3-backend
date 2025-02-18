@@ -20,6 +20,7 @@ router.post("/", verifyToken, async (req, res) => {
   });
 
   // INDEX: this route is to see all the clients
+  // need to fix this to .find only clients 
 router.get("/", verifyToken, async (req, res) => {
     try {
       const allClient = await Client.find({})
