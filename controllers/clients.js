@@ -50,4 +50,17 @@ router.get("/", verifyToken, async (req, res) => {
     }
   });
   
+  // DELETE: client
+  router.delete("/:clientId",  async (req, res) => {
+    try {
+      const clientId = req.params.clientId;
+      const singleClient = await Client.findByIdAndUpdate(clientId)
+      
+      res.status(200).send(singleClient);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  });
+  
+  
   module.exports = router;
