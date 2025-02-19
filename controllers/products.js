@@ -6,7 +6,7 @@ const Product = require('../models/product')
 const express = require('express');
 const router = express.Router();
 
-// this route is to create a new product
+// CREATE: this route is to create a new product
 router.post("/", verifyToken, async (req, res) => {
     try {
       const newProduct = await Product.create(req.body); 
@@ -28,6 +28,8 @@ router.get("/", verifyToken, async (req, res) => {
       res.status(500).json({ err: err.message });
     }
   });
+
+
 
 
   module.exports = router;
