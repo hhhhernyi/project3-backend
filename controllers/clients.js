@@ -54,7 +54,7 @@ router.get("/", verifyToken, async (req, res) => {
   router.delete("/:clientId",  async (req, res) => {
     try {
       const clientId = req.params.clientId;
-      const singleClient = await Client.findByIdAndUpdate(clientId)
+      const singleClient = await Client.findByIdAndDelete(clientId)
       
       res.status(200).send(singleClient);
     } catch (err) {
