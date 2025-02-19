@@ -2,7 +2,7 @@
 // right now ccan create cclients in bnuno already
 
 const verifyToken = require('../middleware/verify-token');
-const Client = require('../models/clients')
+const Client = require('../models/client')
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
