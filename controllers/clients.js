@@ -65,8 +65,10 @@ router.get("/", verifyToken, async (req, res) => {
   //UPDATE: this route is to update a client details
   router.put("/:clientId", verifyToken, async (req,res)=>{
     try {
+      const clientId = req.params.clientId;
+      const body = req.body
       req.body.agent = req.user._id; // req.user comes from the verify token method. we are saving the user id (user who is logged in) to be the agent (req.body.agent) that creates the cclients
-      const updatedClient = await Client.findByIdAndUpdate(req.body); // create the client model using .create() and save to a constant called newClient
+      const updatedClient = await Client.findByIdAndUpdate(clientId, body, {new:true}); // create the client model using .create() and save to a constant called newClient
       updatedClient._doc.agent = req.user;
       res.status(201).json(updatedClient);
     } catch (err) {
