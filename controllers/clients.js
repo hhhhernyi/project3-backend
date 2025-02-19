@@ -40,7 +40,7 @@ router.get("/", verifyToken, async (req, res) => {
   // SHOW:  this route is to see a single client
   router.get("/:clientId", verifyToken, async (req, res) => {
     try {
-      const clientId = req.params.hootId;
+      const clientId = req.params.ClientId;
       const singleClient = await Client.findById(clientId).populate([
         "agent",
       ]);
