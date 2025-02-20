@@ -29,6 +29,42 @@ router.get("/", verifyToken, async (req, res) => {
     }
   });
 
+   // SHOW:  this route is to see a single product
+   router.get("/:productId", verifyToken, async (req, res) => {
+    try {
+      const productId = req.params.productId;
+      const singleProduct = await Product.findById(productId)
+      res.status(200).send(singleProduct);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  });
+
+  // DELETE: product
+  router.delete("/:productId",  verifyToken,async (req, res) => {
+    try {
+      const productId = req.params.productId;
+      const singleProduct = await Product.findByIdAndDelete(productId)
+      
+      res.status(200).send(singleProduct);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  });
+
+   //UPDATE: this route is to update a product details
+   router.put("/:productId", verifyToken, async (req,res)=>{
+    try {
+      const productId = req.params.productId;
+      const body = req.body
+      const updatedProduct = await Product.findByIdAndUpdate(productId, body, {new:true}); 
+      res.status(201).json(updatedProduct);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+
+
+  })
 
 
 
