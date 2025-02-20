@@ -3,6 +3,7 @@
 
 const verifyToken = require('../middleware/verify-token');
 const Client = require('../models/client')
+const Product = require('../models/product')
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -20,7 +21,7 @@ router.post("/", verifyToken, async (req, res) => {
     }
   });
 
-  // INDEX: this route is to see all the clients
+  // INDEX: this route is to see all your own clients
 router.get("/", verifyToken, async (req, res) => {
     try {
       const token = req.headers.authorization.split(' ')[1];
@@ -43,6 +44,7 @@ router.get("/", verifyToken, async (req, res) => {
       const clientId = req.params.clientId;
       const singleClient = await Client.findById(clientId).populate([
         "agent",
+        "productsToSell"
       ]);
       res.status(200).send(singleClient);
     } catch (err) {
@@ -74,8 +76,26 @@ router.get("/", verifyToken, async (req, res) => {
     } catch (err) {
       res.status(500).json({ err: err.message });
     }
+  });
 
+  //ASSIGN: assign product to client
+  router.post("/:clientId/product/:productId", verifyToken, async (req, res) => {
+    try {
+      const {clientId, productId} = req.params;
+      const client = await Client.findById(clientId)
+      const product = await Product.findById(productId)
+      const updatedClientWithProduct = await Client.findByIdAndUpdate(
+        clientId, 
+        {productsToSell: productId}, 
+        {new:true}
+      ).populate("productsToSell"); 
 
+      updatedClientWithProduct._doc.agent = req.user;
+
+      res.status(201).json(client);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
   })
   
   module.exports = router;

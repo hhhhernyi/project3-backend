@@ -18,8 +18,9 @@ const clientSchema = new mongoose.Schema({
     comments: {
         type: String
     },
+    pipeline:[],
     agent: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    // productsToSell: { type: mongoose.Schema.Types.ObjectId, ref: 'Products' },
+    productsToSell: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }],
 },
 { timestamps: true }
 );
