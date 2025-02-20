@@ -86,13 +86,17 @@ router.get("/", verifyToken, async (req, res) => {
       const product = await Product.findById(productId)
       const updatedClientWithProduct = await Client.findByIdAndUpdate(
         clientId, 
-        {productsToSell: productId}, 
+        { $addToSet: { productsToSell: productId } },  // i used ChatGPT to figure out how to add multiple items to a reference array without duplicates, full chat stored in google docs
         {new:true}
       ).populate("productsToSell"); 
 
-      updatedClientWithProduct._doc.agent = req.user;
-
-      res.status(201).json(client);
+        // Check if the client was updated (if product was already there, it wouldn't be added)
+    if (updatedClientWithProduct.productsToSell.length === client.productsToSell.length) {
+      return res.status(400).json({ message: "Product already assigned to client." });
+    } else {
+         updatedClientWithProduct._doc.agent = req.user;
+         res.status(201).json(updatedClientWithProduct);
+     }
     } catch (err) {
       res.status(500).json({ err: err.message });
     }
