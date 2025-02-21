@@ -32,7 +32,16 @@ const clientSchema = new mongoose.Schema({
             return `${day}${month}${year}`;
         }
     },
-    pipeline:[],
+    nextAppt: {
+        type: Date,
+        get: function(value) {
+            if (!value) return value;
+            const day = String(value.getDate()).padStart(2, '0');
+            const month = String(value.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            const year = value.getFullYear();
+            return `${day}${month}${year}`;
+        }
+    },
     dateOfBirth: {
         type: Date,
         required: true,
