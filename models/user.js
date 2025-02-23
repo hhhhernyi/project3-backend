@@ -9,6 +9,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  fullName: {
+    type: String,
+    required: true,
+  },
+  monthlyGoal: {
+    type: Number,
+    required: true,
+  },
 });
 
 userSchema.set('toJSON', {

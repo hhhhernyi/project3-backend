@@ -11,6 +11,7 @@ const logger = require('morgan');
 const authRouter = require('./controllers/auth');
 const clientsRouter = require('./controllers/clients');
 const productsRouter = require('./controllers/products')
+const usersRouter = require('./controllers/userControllers')
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
@@ -27,6 +28,7 @@ app.use(logger('dev'));
 app.use('/auth', authRouter);
 app.use('/clients', clientsRouter);
 app.use('/products', productsRouter);
+app.use('/users', usersRouter);
 
 // Start the server and listen on port 3000
 app.listen(3000, () => {
