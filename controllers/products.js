@@ -62,6 +62,7 @@ router.get("/", verifyToken, async (req, res) => {
     } catch (err) {
       res.status(500).json({ err: err.message });
     }
+  });
 
  // SHOW:  this route is to see products in a single category
  router.get("/category/:categoryId", verifyToken, async (req, res) => {
@@ -76,7 +77,6 @@ router.get("/", verifyToken, async (req, res) => {
 
 
 
-  })
 
 
 
